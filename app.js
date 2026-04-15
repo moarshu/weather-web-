@@ -175,7 +175,6 @@ function updateUI(data, locationName) {
 
     // Hourly
     elHourlyContainer.innerHTML = '';
-    const nowHour = new Date().getHours();
     // take next 24 hours
     for (let i = 0; i < 24; i++) {
         // Find index matching current time
