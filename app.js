@@ -151,7 +151,7 @@ function updateUI(data, locationName) {
     // Parse current date
     const dateObj = new Date(current.time);
     const options = { weekday: 'long', day: 'numeric', month: 'long' };
-    elCurrentDate.textContent = 'Today, ' + dateObj.toLocaleDateString('en-US', options);
+    elCurrentDate.textContent = 'Today, ' + dateObj.toLocaleDateString(navigator.language, options);
 
     elCurrentTemp.textContent = Math.round(current.temperature_2m) + '°';
     
@@ -176,25 +176,21 @@ function updateUI(data, locationName) {
     // Hourly
     elHourlyContainer.innerHTML = '';
     // take next 24 hours
-    for (let i = 0; i < 24; i++) {
-        // Find index matching current time
-        const hourTime = new Date(hourly.time[i]);
-        if (i===0) {
-            // just to sync offset, open meteo provides hourly starting from 00:00 today.
-        }
-    }
     // Better way: find the index in hourly.time that is closest to now, take next 24.
     const currentIndex = parseInt(current.time.split('T')[1].split(':')[0]); // approx
-    let startIndex = hourly.time.findIndex(t => t >= current.time);
-    if(startIndex === -1) startIndex = 0;
+    let startIndex = hourly.time.findIndex(t => new Date(t) >= new Date(current.time));
+    if (startIndex === -1) {
+    console.error("Time sync failed");
+    startIndex = 0;
+}
 
     for (let i = startIndex; i < startIndex + 24; i += 2) {
         if(i >= hourly.time.length) break;
         const hTime = new Date(hourly.time[i]);
         const hcode = hourly.weather_code[i];
         const htemp = Math.round(hourly.temperature_2m[i]);
-        const hInfo = getWeatherIconAndDesc(hcode, true); // Assume day for simplicity or calculate based on time
-
+        const isDayTime = hTime.getHours() >= 6 && hTime.getHours() < 18;
+const hInfo = getWeatherIconAndDesc(hcode, isDayTime);
         const div = document.createElement('div');
         div.className = 'hourly-item';
         div.innerHTML = `
