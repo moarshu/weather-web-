@@ -134,7 +134,7 @@ async function fetchWeatherByCoords(lat, lon, locationName) {
         
         updateUI(data, locationName);
     } catch (e) {
-        alert("Failed to fetch weather data. Please try again.");
+        mainContent.innerHTML = "<h2>⚠️ Failed to load weather</h2>";
     } finally {
         loader.classList.add('hidden');
         mainContent.classList.remove('hidden');
