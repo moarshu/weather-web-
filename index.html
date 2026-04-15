@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- Primary Meta Tags -->
+    <title>Weather 24/7 | Live Weather Forecasts</title>
+    <meta name="title" content="Weather 24/7 | Live Weather Forecasts">
+    <meta name="description" content="Get accurate real-time local weather forecasts, 7-day predictions, hourly updates, UV index, wind speed, and daily timings anywhere in the world. Powered by Arsalan.">
+    <meta name="keywords" content="weather, accurate forecast, live weather, real-time weather, weather app, global temperature, humidity, UV index, Arsalan, Weather 24/7, daily forecast, netlify weather">
+    <meta name="author" content="Arsalan">
+    <meta name="robots" content="index, follow">
+    <meta name="language" content="English">
+    <meta name="revisit-after" content="1 days">
+    <meta name="theme-color" content="#0f172a">
+    <meta name="mobile-web-app-capable" content="yes">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://weather247.netlify.app/">
+    <meta property="og:title" content="Weather 24/7 | Accurate Live Weather Forecasts">
+    <meta property="og:description" content="Get accurate real-time weather forecasts, 7-day predictions, hourly updates, UV index, wind speed, and more. Powered by Arsalan.">
+    <meta property="og:image" content="https://images.unsplash.com/photo-1504608524841-42fe6f032b4b?q=80&w=1200&h=630&auto=format&fit=crop">
+    <meta property="og:site_name" content="Weather 24/7">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://weather247.netlify.app/">
+    <meta property="twitter:title" content="Weather 24/7 | Accurate Live Weather Forecasts">
+    <meta property="twitter:description" content="Get accurate real-time weather forecasts, 7-day predictions, hourly updates, UV index, wind speed, and more. Powered by Arsalan.">
+    <meta property="twitter:image" content="https://images.unsplash.com/photo-1504608524841-42fe6f032b4b?q=80&w=1200&h=630&auto=format&fit=crop">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app-container" id="app">
+        <!-- Search Header -->
+        <header>
+            <div class="logo-container">
+                <div class="logo">Weather 24/7</div>
+                <div class="logo-subtitle">Powered By Arsalan</div>
+            </div>
+            <div class="search-box">
+                <i class="fa-solid fa-magnifying-glass search-icon"></i>
+                <input type="text" id="search-input" placeholder="Search for cities..." autocomplete="off">
+                <button id="location-btn" class="icon-btn" title="Use Current Location"><i class="fa-solid fa-location-crosshairs"></i></button>
+                <button id="search-btn">Search</button>
+                <div class="search-results" id="search-results"></div>
+            </div>
+        </header>
+
+        <div id="loader" class="loader hidden">
+            <i class="fa-solid fa-spinner fa-spin"></i>
+            <p>Fetching Weather...</p>
+        </div>
+
+        <main id="main-content" class="hidden">
+            <!-- Current Weather Overview -->
+            <section class="current-weather glass-card">
+                <div class="weather-main">
+                    <h1 id="city-name">City Name</h1>
+                    <p id="current-date">Today, 24 April</p>
+                    <div class="temp-display">
+                        <i id="current-icon" class="fa-solid fa-sun we-icon large"></i>
+                        <h2 id="current-temp">--°</h2>
+                    </div>
+                    <p id="current-desc" class="desc">Loading...</p>
+                </div>
+                
+                <div class="weather-details">
+                    <div class="detail-item">
+                        <i class="fa-solid fa-temperature-half"></i>
+                        <span class="label">Feels like</span>
+                        <span class="value" id="feels-like">--°</span>
+                    </div>
+                    <div class="detail-item">
+                        <i class="fa-solid fa-droplet"></i>
+                        <span class="label">Humidity</span>
+                        <span class="value" id="humidity">--%</span>
+                    </div>
+                    <div class="detail-item">
+                        <i class="fa-solid fa-wind"></i>
+                        <span class="label">Wind Speed</span>
+                        <span class="value" id="wind">-- km/h</span>
+                    </div>
+                    <div class="detail-item">
+                        <i class="fa-solid fa-sun-plant-wilt"></i>
+                        <span class="label">UV Index</span>
+                        <span class="value" id="uv-index">--</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Hourly Forecast -->
+            <section class="hourly-forecast glass-card">
+                <h3>Today's Forecast</h3>
+                <div class="hourly-container" id="hourly-container">
+                    <!-- Hourly items dynamically populated -->
+                </div>
+            </section>
+
+            <!-- 7-Day Forecast -->
+            <section class="daily-forecast glass-card">
+                <h3>7-Day Forecast</h3>
+                <div class="daily-container" id="daily-container">
+                    <!-- Daily items dynamically populated -->
+                </div>
+            </section>
+            
+            <!-- Sun Info -->
+            <section class="sun-info glass-card">
+                <div class="sun-item">
+                    <i class="fa-solid fa-cloud-sun" style="color: #fbbf24;"></i>
+                    <div class="sun-text">
+                        <span class="label">Sunrise</span>
+                        <span class="value" id="sunrise-time">--:-- AM</span>
+                    </div>
+                </div>
+                <div class="sun-item">
+                    <i class="fa-solid fa-cloud-moon" style="color: #60a5fa;"></i>
+                    <div class="sun-text">
+                        <span class="label">Sunset</span>
+                        <span class="value" id="sunset-time">--:-- PM</span>
+                    </div>
+                </div>
+            </section>
+        </main>
+        
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>
